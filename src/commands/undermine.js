@@ -6,7 +6,8 @@ const utils = require("@utils/utils");
 module.exports = {
     description: "Use this command tag a person who has undermined",
     usage: {},
-    examples: {}
+    examples: {},
+    cooldown: 60
 };
 
 module.exports.run = async (client, message, args) => {
@@ -27,7 +28,7 @@ module.exports.run = async (client, message, args) => {
         let yes_votes = poll.reactions.cache.get("✅").count - 1;
         let no_votes = poll.reactions.cache.get("❌").count - 1;
         if (yes_votes - no_votes > 0) {
-            await CountsService.incrementCount(user.id, current_timestamp);
+            await CountsService.incrementCount(user.id, yes_votes - no_votes, current_timestamp);
             let record = await CountsService.pk(user.id);
             message.channel.send({ embed: { description: `In ${message.author.tag} v. ${user.tag}, with a ${yes_votes} - ${no_votes} vote, the people of "${message.guild.name}" have determined that ${user.tag} is guilty of undermining. This user will be punished with ${yes_votes-no_votes} undermine(s).\n\nThis user has undermined a total of ${record.count} time(s).` }});
             await MetricsService.updateMetrics(user.id, record.count, current_timestamp);

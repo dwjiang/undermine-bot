@@ -22,13 +22,13 @@ class CountsService extends Service {
         return await this.model.findAll(sequelize_query);
     }
     
-    async incrementCount(id, timestamp) {
+    async incrementCount(id, amount, timestamp) {
         let record = await this.model.findByPk(id);
         if (record == null) {
-            let data = { user: id, count: 1, timestamp: timestamp };
+            let data = { user: id, count: amount, timestamp: timestamp };
             await this.model.create(data);
         } else {
-            record.count += 1;
+            record.count += amount;
             record.timestamp = timestamp;
             await record.save();
         }

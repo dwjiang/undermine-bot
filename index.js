@@ -15,8 +15,9 @@ client.once("ready", async () => {
     console.log("Client ready");
 });
 
+const cooldowns = new Discord.Collection();
 client.on("message", message => {
-    require("@src/handler")(message.client, message);
+    require("@src/handler")(client, message, cooldowns);
 });
 
 const config = require("@config/config");
