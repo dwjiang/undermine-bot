@@ -1,5 +1,6 @@
 const CountsService = require('@services/countsService');
 const MetricsService = require('@services/metricsService');
+const config = require("@config/config");
 const utils = require("@utils/utils");
 
 module.exports = {
@@ -15,14 +16,23 @@ module.exports.run = async (client, message, args) => {
     
     let user = message.mentions.users.first();
     let current_timestamp = utils.getLocalDateTime();
-    await CountsService.incrementCount(user.id, current_timestamp);
-    let record = await CountsService.pk(user.id);
-    console.log(record);
-    if (record != null) {
-        message.channel.send(`Attention: ${user.tag} has undermined. This user has undermined a total of ${record.count} time(s).`);
-    } else {
-        throw new Error("Error fetching record");
-    }
+    let poll = await message.channel.send({ embed: {
+        title: `${user.tag} has been accused by ${message.author.tag} of undermining`,
+        description: `Vote ✅ if you believe ${user.tag} is guilty.\nVote ❌ if you believe ${user.tag} is innocent.\n\nThe poll will close in ${config.options.poll_close_time} second(s).`
+    }});
+    await poll.react("✅");
+    await poll.react("❌");
     
-    await MetricsService.updateMetrics(user.id, record.count, current_timestamp);
+    setTimeout(async() => {
+        let yes_votes = poll.reactions.cache.get("✅").count - 1;
+        let no_votes = poll.reactions.cache.get("❌").count - 1;
+        if (yes_votes - no_votes > 0) {
+            await CountsService.incrementCount(user.id, current_timestamp);
+            let record = await CountsService.pk(user.id);
+            message.channel.send({ embed: { description: `In ${message.author.tag} v. ${user.tag}, with a ${yes_votes} - ${no_votes} vote, the people of "${message.guild.name}" have determined that ${user.tag} is guilty of undermining. This user will be punished with ${yes_votes-no_votes} undermine(s).\n\nThis user has undermined a total of ${record.count} time(s).` }});
+            await MetricsService.updateMetrics(user.id, record.count, current_timestamp);
+        } else {
+            message.channel.send({ embed: { description: `In ${message.author.tag} v. ${user.tag}, with a ${yes_votes} - ${no_votes} vote, the people of "${message.guild.name}" have determined that ${user.tag} is not guilty of undermining.` }});
+        }
+    }, config.options.poll_close_time * 1000);
 };

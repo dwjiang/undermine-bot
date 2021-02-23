@@ -9,6 +9,7 @@ module.exports = {
     },
     options: {
         prefix: "!",
-        metrics_save_interval: "day"
+        metrics_save_interval: "day",
+        poll_close_time: 30
     }
 };

@@ -16,9 +16,9 @@ module.exports.run = async (client, message, args) => {
     while (top.length < 5) {
         top.push({ user: "N/A", count: "N/A" });
     }
-    let msg = `Here are the top 5 underminers:\n`;
+    let msg = { title: `The top 5 underminers\n\n`, description: `` };
     ["🥇", "🥈", "🥉", "🏅", "🏅"].forEach((emoji, i) => {
-        msg += `\t${emoji} ${top[i].user} with ${top[i].count} undermine(s)\n`;
+        msg.description += `${emoji} ${top[i].user} with ${top[i].count} undermine(s)\n`;
     });
-    message.channel.send(msg);
+    message.channel.send({ embed: msg });
 };

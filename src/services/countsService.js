@@ -24,7 +24,6 @@ class CountsService extends Service {
     
     async incrementCount(id, timestamp) {
         let record = await this.model.findByPk(id);
-        console.log(record);
         if (record == null) {
             let data = { user: id, count: 1, timestamp: timestamp };
             await this.model.create(data);

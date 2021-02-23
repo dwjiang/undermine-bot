@@ -14,8 +14,8 @@ module.exports.run = async (client, message, args) => {
     let user = message.mentions.users.first();
     let record = await CountsService.pk(user.id);
     if (record == null) {
-        message.channel.send(`${user.tag} is not a certified underminer.`);
+        message.channel.send({ embed: { description: `${user.tag} is not a certified underminer.` }});
     } else {
-        message.channel.send(`${user.tag} has undermined ${record.count} time(s). The last time this user undermined was ${record.timestamp}.`);
+        message.channel.send({ embed: { description: `${user.tag} has undermined ${record.count} time(s). The last time this user undermined was ${record.timestamp}.` }});
     }
 };
