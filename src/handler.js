@@ -25,7 +25,7 @@ module.exports = async (client, message, cooldowns) => {
                 const expiration = timestamps.get(message.author.id) + cooldown_amount;
                 if (now < expiration) {
                     const time_left = (expiration - now) / 1000;
-                    return message.channel.send(`Please wait ${time_left.toFixed(0)} more second(s) before reusing command ${command_name} command.`)
+                    return message.reply(`please wait ${time_left.toFixed(0)} more second(s) before reusing the \`${command_name}\` command.`)
                 }
             }
             
@@ -36,6 +36,6 @@ module.exports = async (client, message, cooldowns) => {
         command.run(client, message, args);
     } catch (error) {
         console.error(error);
-        message.channel.send("There was an error executing that command");
+        message.channel.send("There was an error executing that command.");
     }
 }
