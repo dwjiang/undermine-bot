@@ -11,7 +11,7 @@ const limit_minimum = 1;
 const limit_maximum = 20;
 
 module.exports.run = async (client, message, args) => {
-    let limit = 5;
+    let limit = limit_default;
     if (args.length > 0) {
         if (isNaN(args[0])) {
             return message.reply(`invalid argument for command`);
@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args) => {
     }
     
     let leaderboard = [];
-    let records = await CountsService.find({ limit: limit, order: "desc", orderBy: "count" });
+    let records = await CountsService.find(limit, "desc", "count");
     for (let record of records) {
         let user = await client.users.fetch(record.user);
         leaderboard.push({ user: user.tag, count: record.count });

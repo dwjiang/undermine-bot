@@ -1,16 +1,16 @@
 module.exports = (sequelize, type) => {
-    return sequelize.define("metrics", {
-        id: {
-            type: type.INTEGER.UNSIGNED,
-            allowNull: false,
-            autoIncrement: true,
-            primaryKey: true,
-            fieldName: "id"
-        },
-        user: {
+    return sequelize.define("undermines", {
+        underminer: {
             type: type.STRING(45),
             allowNull: false,
-            fieldName: "user"
+            primaryKey: true,
+            fieldName: "underminer"
+        },
+        underminee: {
+            type: type.STRING(45),
+            allowNull: false,
+            primaryKey: true,
+            fieldName: "underminee"
         },
         count: {
             type: type.INTEGER.UNSIGNED,
@@ -21,12 +21,12 @@ module.exports = (sequelize, type) => {
             type: "TIMESTAMP",
             allowNull: false,
             fieldName: "timestamp"
-        }
-    },
-    {
+		}
+	},
+	{
         timestamps: false,
         engine: "InnoDB",
         charset: "latin1",
-        tableName: "metrics"
-    });
+        tableName: "undermines"
+	});
 };

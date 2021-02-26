@@ -32,6 +32,8 @@ module.exports = async (client, message, cooldowns) => {
         }
                 
         command.run(client, message, args);
+        
+        
     } catch (error) {
         console.error(error);
         message.channel.send("There was an error executing that command.");

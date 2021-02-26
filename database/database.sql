@@ -44,7 +44,23 @@ CREATE TABLE `metrics` (
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_metrics_user_timestamp` (`user`,`timestamp`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `undermines`
+--
+
+DROP TABLE IF EXISTS `undermines`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `undermines` (
+  `underminer` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  `underminee` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  `count` int NOT NULL,
+  `timestamp` timestamp NOT NULL,
+  PRIMARY KEY (`underminer`,`underminee`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +72,4 @@ CREATE TABLE `metrics` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-22 20:52:39
+-- Dump completed on 2021-02-25 20:09:04
