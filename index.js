@@ -17,7 +17,12 @@ client.once("ready", async () => {
 
 const cooldowns = new Discord.Collection();
 client.on("message", message => {
-    require("@src/handler")(client, message, cooldowns);
+    if (message.author.bot)
+        return;
+    else if (message.content.startsWith(config.options.prefix))
+        require("@src/handlers/commands")(client, message, cooldowns);
+    else
+        require("@src/handlers/general")(client, message);
 });
 
 const config = require("@config/config");

@@ -4,8 +4,6 @@ const config = require("@config/config");
 
 module.exports = async (client, message, cooldowns) => {
     try {
-        if (!message.content.startsWith(config.options.prefix) || message.author.bot)
-            return;
         const args = message.content.slice(config.options.prefix.length).trim().split(/ +/);
         const command_name = args.shift().toLowerCase();
         

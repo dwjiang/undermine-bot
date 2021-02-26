@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args) => {
     let msg = { title: `The top ${limit} underminer(s)\n\n`, description: `` };
     leaderboard.forEach((user, i) => {
         let emoji = i < medal_emojis.length ? medal_emojis[i] : "🏅";
-        msg.description += `${emoji} ${user.user} with ${user.count} undermine(s)\n`;
+        msg.description += `${emoji} ${user.user} with ${user.count} person(s) undermined\n`;
     });
     message.channel.send({ embed: msg });
 };

@@ -4,7 +4,7 @@ const config = require("@config/config");
 const utils = require("@utils/utils");
 
 module.exports = {
-    description: "Use this command tag a person who has undermined",
+    description: "Use this command tag a person who has undermined another person",
     usage: {},
     examples: {},
     cooldown: 60
@@ -30,10 +30,10 @@ module.exports.run = async (client, message, args) => {
         if (yes_votes - no_votes > 0) {
             await CountsService.incrementCount(user.id, yes_votes - no_votes, current_timestamp);
             let record = await CountsService.pk(user.id);
-            message.channel.send({ embed: { description: `In ${message.author.tag} v. ${user.tag}, with a ${yes_votes} - ${no_votes} vote, the people of "${message.guild.name}" have determined that ${user.tag} is guilty of undermining. This user will be punished with ${yes_votes-no_votes} undermine(s).\n\nThis user has undermined a total of ${record.count} time(s).` }});
+            message.channel.send({ embed: { description: `In ${message.author.tag} v. ${user.tag}, with a ${yes_votes} - ${no_votes} vote, the people of "${message.guild.name}" have determined that ${user.tag} is guilty of the charge of undermining. This user has undermined ${yes_votes-no_votes} person(s).\n\nThis user has undermined a total of ${record.count} person(s).` }});
             await MetricsService.updateMetrics(user.id, record.count, current_timestamp);
         } else {
-            message.channel.send({ embed: { description: `In ${message.author.tag} v. ${user.tag}, with a ${yes_votes} - ${no_votes} vote, the people of "${message.guild.name}" have determined that ${user.tag} is not guilty of undermining.` }});
+            message.channel.send({ embed: { description: `In ${message.author.tag} v. ${user.tag}, with a ${yes_votes} - ${no_votes} vote, the people of "${message.guild.name}" have determined that ${user.tag} is not guilty of the charge of undermining.` }});
         }
     }, config.options.poll_close_time * 1000);
 };

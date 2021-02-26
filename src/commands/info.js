@@ -16,6 +16,6 @@ module.exports.run = async (client, message, args) => {
     if (record == null) {
         message.channel.send({ embed: { description: `${user.tag} is not a certified underminer.` }});
     } else {
-        message.channel.send({ embed: { description: `${user.tag} has undermined ${record.count} time(s). The last time this user undermined was ${record.timestamp}.` }});
+        message.channel.send({ embed: { description: `${user.tag} has undermined ${record.count} person(s). The last time this user undermined was ${record.timestamp}.` }});
     }
 };
