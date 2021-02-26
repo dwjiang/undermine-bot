@@ -36,8 +36,6 @@ module.exports.run = async (client, message, args) => {
             let underminee = await client.users.fetch(undermine.underminee);
             leaderboard.push({ user: underminee.tag, count: undermine.count, timestamp: undermine.timestamp });
         }
-        while (leaderboard.length < limit)
-            leaderboard.push({ user: "N/A", count: "N/A", timestamp: "N/A" });
 
         const medal_emojis = ["🥇", "🥈", "🥉"];
         let msg = ``;
@@ -49,7 +47,7 @@ module.exports.run = async (client, message, args) => {
             description: `${user.tag} has undermined ${record.count} person(s). The last time this user undermined was ${record.timestamp}.`,
             fields: [
                 {
-                    name: `The top ${limit} person(s) undermined by ${user.tag}`,
+                    name: `The top ${leaderboard.length} person(s) undermined by ${user.tag}`,
                     value: msg
                 }
             ]

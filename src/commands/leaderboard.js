@@ -8,7 +8,7 @@ module.exports = {
 
 const limit_default = 5;
 const limit_minimum = 1;
-const limit_maximum = 20;
+const limit_maximum = 30;
 
 module.exports.run = async (client, message, args) => {
     let limit = limit_default;
@@ -27,11 +27,9 @@ module.exports.run = async (client, message, args) => {
         let user = await client.users.fetch(record.user);
         leaderboard.push({ user: user.tag, count: record.count });
     }
-    while (leaderboard.length < limit)
-        leaderboard.push({ user: "N/A", count: "N/A" });
     
     const medal_emojis = ["🥇", "🥈", "🥉"];
-    let msg = { title: `The top ${limit} underminer(s)\n\n`, description: `` };
+    let msg = { title: `The top ${leaderboard.length} underminer(s)\n\n`, description: `` };
     leaderboard.forEach((user, i) => {
         let emoji = i < medal_emojis.length ? medal_emojis[i] : "🏅";
         msg.description += `${emoji} ${user.user} with ${user.count} person(s) undermined\n`;
