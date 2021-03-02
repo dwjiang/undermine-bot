@@ -29,14 +29,14 @@ module.exports.run = async (client, message, args) => {
         let yes_votes = poll.reactions.cache.get("✅").count - 1;
         let no_votes = poll.reactions.cache.get("❌").count - 1;
         if (yes_votes - no_votes > 0) {
-            await CountsService.incrementCount(user.id, yes_votes - no_votes, current_timestamp);
+            await CountsService.incrementCount(user.id, yes_votes, current_timestamp);
             let record = await CountsService.pk(user.id);
             poll.reactions.cache.get("✅").users.cache.forEach((underminee, id) => {
                 if (underminee.id === client.user.id)
                     return;
                 UnderminesService.incrementCount(user.id, underminee.id, current_timestamp);
             });
-            message.channel.send({ embed: { description: `In ${message.author.tag} v. ${user.tag}, with a ${yes_votes} - ${no_votes} vote, the people of "${message.guild.name}" have determined that ${user.tag} is guilty of the charge of undermining. This user has undermined ${yes_votes-no_votes} person(s).\n\nThis user has undermined a total of ${record.count} person(s).` }});
+            message.channel.send({ embed: { description: `In ${message.author.tag} v. ${user.tag}, with a ${yes_votes} - ${no_votes} vote, the people of "${message.guild.name}" have determined that ${user.tag} is guilty of the charge of undermining. This user has undermined ${yes_votes} person(s).\n\nThis user has undermined a total of ${record.count} person(s).` }});
             MetricsService.updateMetrics(user.id, record.count, current_timestamp);
         } else {
             message.channel.send({ embed: { description: `In ${message.author.tag} v. ${user.tag}, with a ${yes_votes} - ${no_votes} vote, the people of "${message.guild.name}" have determined that ${user.tag} is not guilty of the charge of undermining.` }});
