@@ -6,8 +6,12 @@ module.exports = {
     examples: {}
 };
 
+const limit_default = 5;
+const limit_minimum = 1;
+const limit_maximum = 30;
+
 module.exports.run = async (client, message, args) => {
-    let limit = null;
+    let limit = limit_default;
     if (args.length > 0) {
         if (isNaN(args[0])) {
             return message.reply(`invalid argument for command`);
