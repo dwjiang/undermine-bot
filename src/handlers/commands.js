@@ -8,7 +8,7 @@ module.exports = async (client, message, cooldowns) => {
         const command_name = args.shift().toLowerCase();
         
         if (!client.commands.has(command_name))
-            return message.channel.send("Invalid command");
+            return
         
         const command = client.commands.get(command_name);
         

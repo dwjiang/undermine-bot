@@ -7,9 +7,9 @@ module.exports = {
     examples: {}
 };
 
-const limit_default = 3;
+const limit_default = 5;
 const limit_minimum = 1;
-const limit_maximum = 10;
+const limit_maximum = 30;
 module.exports.run = async (client, message, args) => {
     if (message.mentions.users.size === 0 || message.mentions.users.first().id === client.user.id) {
         return message.channel.send("You didn't tag a valid user.");
